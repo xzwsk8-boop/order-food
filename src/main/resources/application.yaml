@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: order-food
+  
+  # 数据库配置
+  datasource:
+    url: jdbc:mysql://sh-cynosdbmysql-grp-arazbxi2.sql.tencentcdb.com:20381/order_food?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: T7TeSCXz
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# MyBatis Plus 配置
+mybatis-plus:
+  # Mapper XML 文件路径
+  mapper-locations: classpath*:/mapper/**/*.xml
+  # 实体类包路径
+  type-aliases-package: weixin.order_food.entity
+  configuration:
+    # SQL 日志输出
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 开启驼峰命名转换
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      # 主键策略
+      id-type: AUTO
+      # 逻辑删除字段
+      logic-delete-field: deleted
+      # 逻辑删除值
+      logic-delete-value: 1
+      # 逻辑未删除值
+      logic-not-delete-value: 0
+
+  ai:
+    deepseek:
+      api-key: sk-5510b99550a3499198758497c12e8626
+      chat:
+        options:
+          model: deepseek-chat
+
+# 微信小程序配置
+wechat:
+  miniapp:
+    # 请替换为你的实际 appId 和 appSecret
+    app-id: your-app-id-here
+    app-secret: your-app-secret-here
+
+# 日志配置
+logging:
+  level:
+    weixin.order_food: DEBUG
+    org.springframework.web: INFO
+    com.baomidou.mybatisplus: DEBUG
