@@ -1,42 +1,44 @@
 package weixin.order_food.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 /**
  * 用户实体类
  */
-@TableName("users")
+@Entity
+@Table(name = "users")
 public class User extends BaseEntity {
     
     /**
      * 微信 openid
      */
-    @TableField("openid")
+    @Column(name = "openid", unique = true)
     private String openid;
     
     /**
      * 用户昵称
      */
-    @TableField("nickname")
+    @Column(name = "nickname")
     private String nickname;
     
     /**
      * 用户头像
      */
-    @TableField("avatar_url")
+    @Column(name = "avatar_url")
     private String avatarUrl;
     
     /**
      * 性别 0-未知 1-男性 2-女性
      */
-    @TableField("gender")
+    @Column(name = "gender")
     private Integer gender;
     
     /**
      * 手机号码
      */
-    @TableField("phone")
+    @Column(name = "phone")
     private String phone;
     
     // 构造函数

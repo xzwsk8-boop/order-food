@@ -1,37 +1,44 @@
 package weixin.order_food.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 /**
  * 基础实体类
  */
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
     
     /**
      * 主键ID
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     /**
      * 创建时间
      */
-    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    @CreatedDate
+    @Column(name = "create_time")
     private LocalDateTime createTime;
     
     /**
      * 更新时间
      */
-    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
+    @LastModifiedDate
+    @Column(name = "update_time")
     private LocalDateTime updateTime;
     
     /**
      * 逻辑删除标识 0-未删除 1-已删除
      */
-    @TableLogic
-    @TableField(value = "deleted")
-    private Integer deleted;
+    @Column(name = "deleted")
+    private Integer deleted = 0;
     
     // Getter 和 Setter 方法
     public Long getId() {

@@ -1,23 +1,27 @@
 package weixin.order_food.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import weixin.order_food.entity.User;
-import weixin.order_food.mapper.UserMapper;
+import weixin.order_food.repository.UserRepository;
 import weixin.order_food.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 用户服务实现类
  */
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+public class UserServiceImpl implements UserService {
+    
+    @Autowired
+    private UserRepository userRepository;
     
     @Override
     public User getUserByOpenid(String openid) {
-        return this.baseMapper.selectByOpenid(openid);
+        return userRepository.findByOpenid(openid).orElse(null);
     }
     
     @Override
@@ -30,8 +34,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             existingUser.setAvatarUrl(avatarUrl);
             existingUser.setGender(gender);
             existingUser.setUpdateTime(LocalDateTime.now());
-            this.updateById(existingUser);
-            return existingUser;
+            return userRepository.save(existingUser);
         } else {
             // 创建新用户
             User newUser = new User();
@@ -39,19 +42,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             newUser.setNickname(nickname);
             newUser.setAvatarUrl(avatarUrl);
             newUser.setGender(gender);
-            this.save(newUser);
-            return newUser;
+            return userRepository.save(newUser);
         }
     }
     
     @Override
     public List<User> getAllActiveUsers() {
-        return this.baseMapper.selectAllActiveUsers();
+        return userRepository.findAllActiveUsers();
     }
     
     @Override
     public boolean existsUserByOpenid(String openid) {
-        return this.baseMapper.countByOpenid(openid) > 0;
+        return userRepository.countByOpenid(openid) > 0;
     }
     
     @Override
@@ -60,14 +62,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (user != null) {
             user.setPhone(phone);
             user.setUpdateTime(LocalDateTime.now());
-            this.updateById(user);
-            return user;
+            return userRepository.save(user);
         }
         return null;
     }
     
     @Override
     public boolean deleteUser(Long userId) {
-        return this.removeById(userId);
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            user.setDeleted(1);
+            user.setUpdateTime(LocalDateTime.now());
+            userRepository.save(user);
+            return true;
+        }
+        return false;
     }
 }

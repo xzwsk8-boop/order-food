@@ -1,11 +1,12 @@
 package weixin.order_food;
 
-import org.mybatis.spring.annotation.MapperScan;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-@MapperScan("weixin.order_food.mapper")
+@EnableJpaAuditing
 public class OrderFoodApplication {
 
 	public static void main(String[] args) {

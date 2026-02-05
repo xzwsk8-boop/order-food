@@ -1,6 +1,6 @@
 package weixin.order_food.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+
 import weixin.order_food.entity.User;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 用户服务接口
  */
-public interface UserService extends IService<User> {
+public interface UserService {
     
     /**
      * 根据 openid 获取用户

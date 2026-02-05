@@ -8,28 +8,18 @@ spring:
     username: root
     password: T7TeSCXz
     driver-class-name: com.mysql.cj.jdbc.Driver
-
-# MyBatis Plus 配置
-mybatis-plus:
-  # Mapper XML 文件路径
-  mapper-locations: classpath*:/mapper/**/*.xml
-  # 实体类包路径
-  type-aliases-package: weixin.order_food.entity
-  configuration:
-    # SQL 日志输出
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    # 开启驼峰命名转换
-    map-underscore-to-camel-case: true
-  global-config:
-    db-config:
-      # 主键策略
-      id-type: AUTO
-      # 逻辑删除字段
-      logic-delete-field: deleted
-      # 逻辑删除值
-      logic-delete-value: 1
-      # 逻辑未删除值
-      logic-not-delete-value: 0
+  
+  # JPA 配置
+  jpa:
+    hibernate:
+      # ddl-auto: update  # 开发环境可以使用，生产环境建议禁用
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false
 
   ai:
     deepseek:
