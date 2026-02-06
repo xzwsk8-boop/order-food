@@ -1,6 +1,8 @@
 package weixin.order_food.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import weixin.order_food.entity.Orders;
 import weixin.order_food.entity.OrderStatus;
@@ -48,6 +50,11 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public List<Orders> getAllOrders() {
         return ordersRepository.findAll();
+    }
+
+    @Override
+    public Page<Orders> getOrdersByPage(Pageable pageable) {
+        return ordersRepository.findAll(pageable);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package weixin.order_food.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import weixin.order_food.entity.Orders;
 import weixin.order_food.entity.OrderStatus;
 
@@ -29,6 +31,11 @@ public interface OrdersService {
      * 获取所有订单
      */
     List<Orders> getAllOrders();
+    
+    /**
+     * 分页获取订单
+     */
+    Page<Orders> getOrdersByPage(Pageable pageable);
     
     /**
      * 根据桌号获取订单
