@@ -26,4 +26,9 @@ public interface DrinksRepository extends JpaRepository<Drinks, Integer> {
      * 查找库存大于指定数量的饮品
      */
     List<Drinks> findByStockGreaterThan(Integer stock);
+
+    /**
+     * 根据名称查找饮品
+     */
+    List<Drinks> findByName(String name);
 }
