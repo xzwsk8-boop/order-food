@@ -4,7 +4,7 @@ spring:
   
   # 数据库配置
   datasource:
-    url: jdbc:mysql://sh-cynosdbmysql-grp-arazbxi2.sql.tencentcdb.com:20381/order_food?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://sh-cynosdbmysql-grp-arazbxi2.sql.tencentcdb.com:20381/art_studio_db?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
     password: T7TeSCXz
     driver-class-name: com.mysql.cj.jdbc.Driver
