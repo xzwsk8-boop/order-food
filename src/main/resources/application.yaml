@@ -41,3 +41,7 @@ logging:
     weixin.order_food: DEBUG
     org.springframework.web: INFO
     com.baomidou.mybatisplus: DEBUG
+
+# application.yml
+server:
+  port: 80  # 改为80，和云托管健康检查端口一致
