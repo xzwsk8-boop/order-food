@@ -30,7 +30,7 @@ WORKDIR /app
 COPY --from=builder /build/target/*.jar app.jar
 
 # 暴露端口（微信云托管/常见的云容器服务通常默认 80）
-EXPOSE 80
+EXPOSE 8080
 
 # 启动命令
 # 可以通过环境变量 JAVA_OPTS 传入 JVM 参数
