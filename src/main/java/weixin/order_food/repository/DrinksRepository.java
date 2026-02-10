@@ -18,11 +18,6 @@ public interface DrinksRepository extends JpaRepository<Drinks, Integer> {
     List<Drinks> findByCategory(String category);
 
     /**
-     * 根据库存状态查找饮品
-     */
-    List<Drinks> findByStockStatus(Integer stockStatus);
-
-    /**
      * 查找库存大于指定数量的饮品
      */
     List<Drinks> findByStockGreaterThan(Integer stock);
@@ -31,4 +26,9 @@ public interface DrinksRepository extends JpaRepository<Drinks, Integer> {
      * 根据名称查找饮品
      */
     List<Drinks> findByName(String name);
+
+    /**
+     * 根据标签模糊查询
+     */
+    List<Drinks> findByTagsContaining(String tag);
 }

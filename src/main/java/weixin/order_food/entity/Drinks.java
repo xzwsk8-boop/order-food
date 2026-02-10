@@ -19,10 +19,13 @@ public class Drinks {
 
     private BigDecimal price;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "image_url")
-    private String imageUrl;
+    /**
+     * 标签：以逗号分隔，如“酸,甜,烈”
+     */
+    private String tags;
 
     private String category;
 
@@ -71,12 +74,12 @@ public class Drinks {
         this.description = description;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getTags() {
+        return tags;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     public String getCategory() {

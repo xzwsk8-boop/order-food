@@ -49,7 +49,7 @@ public class DrinksController {
             drink.setName(drinkDetails.getName());
             drink.setPrice(drinkDetails.getPrice());
             drink.setDescription(drinkDetails.getDescription());
-            drink.setImageUrl(drinkDetails.getImageUrl());
+            drink.setTags(drinkDetails.getTags());
             drink.setCategory(drinkDetails.getCategory());
             drink.setStock(drinkDetails.getStock());
             // createdAt is usually not updated
