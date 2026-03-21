@@ -1,0 +1,60 @@
+package weixin.order_food.barber.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import weixin.order_food.barber.entity.Appointment;
+import weixin.order_food.barber.service.AppointmentService;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/barber/appointments")
+public class AppointmentController {
+
+    @Autowired
+    private AppointmentService appointmentService;
+
+    /**
+     * 用户提交预约
+     */
+    @PostMapping("/create")
+    public ResponseEntity<Appointment> createAppointment(@RequestBody Appointment appointment) {
+        Appointment created = appointmentService.createAppointment(appointment);
+        return ResponseEntity.ok(created);
+    }
+
+    /**
+     * 获取指定用户的预约记录
+     */
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Appointment>> getUserAppointments(@PathVariable Long userId) {
+        List<Appointment> appointments = appointmentService.getUserAppointments(userId);
+        return ResponseEntity.ok(appointments);
+    }
+
+    /**
+     * 获取理发师指定日期的预约排班情况（用于前端禁用已被预约的时间段）
+     * @param date 格式: yyyy-MM-dd
+     */
+    @GetMapping("/barber/{barberId}/schedule")
+    public ResponseEntity<List<Appointment>> getBarberSchedule(
+            @PathVariable Long barberId,
+            @RequestParam String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        List<Appointment> schedule = appointmentService.getBarberSchedule(barberId, localDate);
+        return ResponseEntity.ok(schedule);
+    }
+
+    /**
+     * 更改预约状态 (例如：用户取消、理发师核销完成等)
+     */
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Appointment> updateStatus(
+            @PathVariable Long id,
+            @RequestParam Integer status) {
+        Appointment updated = appointmentService.updateAppointmentStatus(id, status);
+        return ResponseEntity.ok(updated);
+    }
+}
