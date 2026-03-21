@@ -3,6 +3,7 @@ package weixin.order_food.barber.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import weixin.order_food.barber.dto.TimeSlot;
 import weixin.order_food.barber.entity.Appointment;
 import weixin.order_food.barber.service.AppointmentService;
 
@@ -56,5 +57,19 @@ public class AppointmentController {
             @RequestParam Integer status) {
         Appointment updated = appointmentService.updateAppointmentStatus(id, status);
         return ResponseEntity.ok(updated);
+    }
+
+    /**
+     * 获取理发师指定日期的可用时间段（前端展示可选时间）
+     * @param barberId 理发师ID
+     * @param date 日期，格式: yyyy-MM-dd
+     */
+    @GetMapping("/available-slots")
+    public ResponseEntity<List<TimeSlot>> getAvailableSlots(
+            @RequestParam Long barberId,
+            @RequestParam String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        List<TimeSlot> availableSlots = appointmentService.getAvailableSlots(barberId, localDate);
+        return ResponseEntity.ok(availableSlots);
     }
 }

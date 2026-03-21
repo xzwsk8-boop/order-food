@@ -1,5 +1,6 @@
 package weixin.order_food.barber.service;
 
+import weixin.order_food.barber.dto.TimeSlot;
 import weixin.order_food.barber.entity.Appointment;
 import java.time.LocalDate;
 import java.util.List;
@@ -27,4 +28,9 @@ public interface AppointmentService {
      * @param status 新状态 (0-待服务, 1-已完成, 2-已取消, 3-爽约)
      */
     Appointment updateAppointmentStatus(Long appointmentId, Integer status);
+
+    /**
+     * 获取理发师在指定日期的可用时间段
+     */
+    List<TimeSlot> getAvailableSlots(Long barberId, LocalDate date);
 }

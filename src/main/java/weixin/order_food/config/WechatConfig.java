@@ -1,37 +1,27 @@
 package weixin.order_food.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
-/**
- * 微信小程序配置类
- */
-@Component
+@Configuration
 @ConfigurationProperties(prefix = "wechat.miniapp")
 public class WechatConfig {
     
-    /**
-     * 小程序 appId
-     */
     private String appId;
-    
-    /**
-     * 小程序 appSecret
-     */
     private String appSecret;
-    
+
     public String getAppId() {
         return appId;
     }
-    
+
     public void setAppId(String appId) {
         this.appId = appId;
     }
-    
+
     public String getAppSecret() {
         return appSecret;
     }
-    
+
     public void setAppSecret(String appSecret) {
         this.appSecret = appSecret;
     }
