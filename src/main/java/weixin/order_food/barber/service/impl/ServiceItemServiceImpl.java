@@ -23,4 +23,28 @@ public class ServiceItemServiceImpl implements ServiceItemService {
     public List<ServiceItem> getServiceItemsByCategory(String category) {
         return serviceItemRepository.findByCategory(category);
     }
+
+    @Override
+    public ServiceItem createServiceItem(ServiceItem serviceItem) {
+        return serviceItemRepository.save(serviceItem);
+    }
+
+    @Override
+    public ServiceItem updateServiceItem(ServiceItem serviceItem) {
+        if (serviceItem.getId() == null) {
+            throw new IllegalArgumentException("更新服务项目时 ID 不能为空");
+        }
+        if (!serviceItemRepository.existsById(serviceItem.getId())) {
+            throw new IllegalArgumentException("服务项目不存在，ID: " + serviceItem.getId());
+        }
+        return serviceItemRepository.save(serviceItem);
+    }
+
+    @Override
+    public void deleteServiceItem(Long id) {
+        if (!serviceItemRepository.existsById(id)) {
+            throw new IllegalArgumentException("服务项目不存在，ID: " + id);
+        }
+        serviceItemRepository.deleteById(id);
+    }
 }
