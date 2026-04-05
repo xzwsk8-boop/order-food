@@ -44,7 +44,12 @@ public class UserController {
 
         try {
             RestTemplate restTemplate = new RestTemplate();
-            Map<String, Object> response = restTemplate.getForObject(url, Map.class);
+            // 先将微信返回的结果作为 String 接收，以避免 RestTemplate 对 content-type text/plain 的解析错误
+            String responseStr = restTemplate.getForObject(url, String.class);
+            
+            // 手动使用 Jackson 解析 JSON 字符串
+            com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+            Map<String, Object> response = mapper.readValue(responseStr, new com.fasterxml.jackson.core.type.TypeReference<Map<String, Object>>() {});
             
             if (response == null || (response.containsKey("errcode") && (Integer) response.get("errcode") != 0)) {
                 return Result.error("微信接口调用失败: " + response.get("errmsg"));

@@ -48,8 +48,13 @@ public class AuthController {
         );
 
         try {
-            // 调用微信接口获取 openid 和 session_key
-            Map<String, Object> response = restTemplate.getForObject(url, Map.class);
+            // 先将微信返回的结果作为 String 接收，以避免 RestTemplate 对 content-type text/plain 的解析错误
+            String responseStr = restTemplate.getForObject(url, String.class);
+            
+            // 手动使用 Jackson 解析 JSON 字符串
+            com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+            Map<String, Object> response = mapper.readValue(responseStr, new com.fasterxml.jackson.core.type.TypeReference<Map<String, Object>>() {});
+
             if (response == null || response.containsKey("errcode") && (Integer) response.get("errcode") != 0) {
                 return ResponseEntity.status(500).body("微信登录失败: " + response);
             }
