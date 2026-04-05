@@ -26,6 +26,9 @@ public class AuthController {
     @Autowired
     private JwtUtils jwtUtils;
 
+    @Autowired
+    private weixin.order_food.barber.repository.BarberRepository barberRepository;
+
     // 为了简单起见，这里直接实例化 RestTemplate，在实际项目中建议作为 Bean 注入
     private final RestTemplate restTemplate = new RestTemplate();
 
@@ -58,12 +61,17 @@ public class AuthController {
 
             // 登录或注册用户
             User user = userService.loginOrRegister(openid);
+            
+            // 判断该用户是否是理发师(店员)
+            weixin.order_food.barber.entity.Barber barber = barberRepository.findByOpenid(openid).orElse(null);
+            boolean isBarber = (barber != null);
+            Long barberId = isBarber ? barber.getId() : null;
 
             // 生成 JWT
             String token = jwtUtils.generateToken(user.getId(), openid);
 
             // 返回 token 和 userId 给前端
-            return ResponseEntity.ok(new LoginResponse(token, user.getId()));
+            return ResponseEntity.ok(new LoginResponse(token, user.getId(), isBarber, barberId));
 
         } catch (Exception e) {
             e.printStackTrace();
