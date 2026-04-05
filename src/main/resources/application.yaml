@@ -32,8 +32,8 @@ spring:
 wechat:
   miniapp:
     # 请替换为你的实际 appId 和 appSecret
-    app-id: your-app-id-here
-    app-secret: your-app-secret-here
+    app-id: wx83e50c069fcca77b
+    app-secret: 7f59a3a6e61c0a5c64beea2bffc49e6d
 
 # 日志配置
 logging:
