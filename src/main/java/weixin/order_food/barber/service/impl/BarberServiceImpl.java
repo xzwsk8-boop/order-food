@@ -45,6 +45,7 @@ public class BarberServiceImpl implements BarberService {
             if (barber.getAvatar() != null) existing.setAvatar(barber.getAvatar());
             if (barber.getBio() != null) existing.setBio(barber.getBio());
             if (barber.getPortfolio() != null) existing.setPortfolio(barber.getPortfolio());
+            if (barber.getOpenid() != null) existing.setOpenid(barber.getOpenid());
             if (barber.getIsActive() != null) existing.setIsActive(barber.getIsActive());
             return barberRepository.save(existing);
         }).orElseThrow(() -> new RuntimeException("理发师不存在"));

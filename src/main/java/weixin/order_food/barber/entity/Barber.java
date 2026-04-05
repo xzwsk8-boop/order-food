@@ -29,6 +29,9 @@ public class Barber {
     @Column(columnDefinition = "JSON")
     private List<String> portfolio;
 
+    @Column(name = "openid", unique = true, length = 100)
+    private String openid;
+
     @Column(name = "is_active", columnDefinition = "TINYINT(1) DEFAULT 1")
     private Integer isActive = 1;
 
@@ -53,6 +56,9 @@ public class Barber {
 
     public List<String> getPortfolio() { return portfolio; }
     public void setPortfolio(List<String> portfolio) { this.portfolio = portfolio; }
+
+    public String getOpenid() { return openid; }
+    public void setOpenid(String openid) { this.openid = openid; }
 
     public Integer getIsActive() { return isActive; }
     public void setIsActive(Integer isActive) { this.isActive = isActive; }
