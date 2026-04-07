@@ -12,6 +12,7 @@ public class AppointmentDTO {
     private Long barberId;
     private Long serviceId;
     private String serviceName; // 额外增加的字段
+    private java.math.BigDecimal price; // 价格字段
     private LocalDate appointmentDate;
     private LocalTime startTime;
     private LocalTime endTime;
@@ -28,6 +29,7 @@ public class AppointmentDTO {
         this.barberId = appointment.getBarberId();
         this.serviceId = appointment.getServiceId();
         this.serviceName = serviceName;
+        this.price = appointment.getPrice();
         this.appointmentDate = appointment.getAppointmentDate();
         this.startTime = appointment.getStartTime();
         this.endTime = appointment.getEndTime();
@@ -74,6 +76,14 @@ public class AppointmentDTO {
 
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
+    }
+
+    public java.math.BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(java.math.BigDecimal price) {
+        this.price = price;
     }
 
     public LocalDate getAppointmentDate() {

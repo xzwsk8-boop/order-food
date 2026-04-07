@@ -34,6 +34,9 @@ public class Appointment {
     @Column(name = "end_time", nullable = false)
     private LocalTime endTime;
 
+    @Column(name = "price", precision = 10, scale = 2)
+    private java.math.BigDecimal price;
+
     // 状态: 0-待服务, 1-已完成, 2-已取消, 3-爽约
     @Column(name = "status", columnDefinition = "TINYINT DEFAULT 0")
     private Integer status = 0;
@@ -101,6 +104,14 @@ public class Appointment {
 
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
+    }
+
+    public java.math.BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(java.math.BigDecimal price) {
+        this.price = price;
     }
 
     public Integer getStatus() {

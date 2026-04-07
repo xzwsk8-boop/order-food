@@ -38,6 +38,14 @@ public class AppointmentServiceImpl implements AppointmentService {
             throw new RuntimeException("该理发师在选定时间段内已有预约，请选择其他时间");
         }
 
+        // 如果前端没有传价格，我们从服务项目中获取并填充
+        if (appointment.getPrice() == null && appointment.getServiceId() != null) {
+            Optional<weixin.order_food.barber.entity.ServiceItem> serviceOpt = serviceItemRepository.findById(appointment.getServiceId());
+            if (serviceOpt.isPresent()) {
+                appointment.setPrice(serviceOpt.get().getPrice());
+            }
+        }
+
         // 保存预约
         return appointmentRepository.save(appointment);
     }
