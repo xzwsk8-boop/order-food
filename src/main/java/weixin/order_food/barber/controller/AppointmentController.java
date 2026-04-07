@@ -27,11 +27,11 @@ public class AppointmentController {
     }
 
     /**
-     * 获取指定用户的预约记录
+     * 获取指定用户的预约记录 (包含服务项目名称)
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Appointment>> getUserAppointments(@PathVariable Long userId) {
-        List<Appointment> appointments = appointmentService.getUserAppointments(userId);
+    public ResponseEntity<List<weixin.order_food.barber.dto.AppointmentDTO>> getUserAppointments(@PathVariable Long userId) {
+        List<weixin.order_food.barber.dto.AppointmentDTO> appointments = appointmentService.getUserAppointmentsWithDetails(userId);
         return ResponseEntity.ok(appointments);
     }
 

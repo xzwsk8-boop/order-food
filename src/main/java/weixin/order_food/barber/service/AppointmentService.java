@@ -13,9 +13,9 @@ public interface AppointmentService {
     Appointment createAppointment(Appointment appointment);
 
     /**
-     * 查询指定用户的预约记录
+     * 查询指定用户的预约记录 (包含服务名称等附加信息)
      */
-    List<Appointment> getUserAppointments(Long userId);
+    List<weixin.order_food.barber.dto.AppointmentDTO> getUserAppointmentsWithDetails(Long userId);
 
     /**
      * 查询理发师某天的日程安排

@@ -20,6 +20,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
+    @Autowired
+    private weixin.order_food.barber.repository.ServiceItemRepository serviceItemRepository;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Appointment createAppointment(Appointment appointment) {
@@ -40,8 +43,21 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public List<Appointment> getUserAppointments(Long userId) {
-        return appointmentRepository.findByUserIdOrderByAppointmentDateDescStartTimeDesc(userId);
+    public List<weixin.order_food.barber.dto.AppointmentDTO> getUserAppointmentsWithDetails(Long userId) {
+        List<Appointment> appointments = appointmentRepository.findByUserIdOrderByAppointmentDateDescStartTimeDesc(userId);
+        
+        List<weixin.order_food.barber.dto.AppointmentDTO> dtoList = new ArrayList<>();
+        for (Appointment appt : appointments) {
+            String serviceName = "未知服务";
+            if (appt.getServiceId() != null) {
+                Optional<weixin.order_food.barber.entity.ServiceItem> serviceOpt = serviceItemRepository.findById(appt.getServiceId());
+                if (serviceOpt.isPresent()) {
+                    serviceName = serviceOpt.get().getName();
+                }
+            }
+            dtoList.add(new weixin.order_food.barber.dto.AppointmentDTO(appt, serviceName));
+        }
+        return dtoList;
     }
 
     @Override
