@@ -97,6 +97,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             LocalTime currentSlotEnd = currentSlotStart.plusMinutes(slotMinutes);
 
             // 如果查询的是今天，并且该时段已经过去，则跳过
+            // 使用 isBefore 判断，确保只返回当前时间之后的时间段
             if (date.equals(today) && currentSlotStart.isBefore(now)) {
                 currentSlotStart = currentSlotEnd;
                 continue;
