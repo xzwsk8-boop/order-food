@@ -90,8 +90,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         List<TimeSlot> availableSlots = new ArrayList<>();
         LocalTime currentSlotStart = workStart;
-        LocalDate today = LocalDate.now();
-        LocalTime now = LocalTime.now();
+        
+        // 修复时区问题，强制使用东八区（北京时间）获取当前日期和时间
+        java.time.ZoneId zoneId = java.time.ZoneId.of("Asia/Shanghai");
+        LocalDate today = LocalDate.now(zoneId);
+        LocalTime now = LocalTime.now(zoneId);
 
         while (!currentSlotStart.plusMinutes(slotMinutes).isAfter(workEnd)) {
             LocalTime currentSlotEnd = currentSlotStart.plusMinutes(slotMinutes);
