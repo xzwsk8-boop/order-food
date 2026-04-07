@@ -28,4 +28,12 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
                                       @Param("appointmentDate") LocalDate appointmentDate, 
                                       @Param("startTime") LocalTime startTime, 
                                       @Param("endTime") LocalTime endTime);
+
+    // 修改订单时，查询冲突预约（排除当前订单自身）
+    @Query("SELECT COUNT(a) FROM Appointment a WHERE a.barberId = :barberId AND a.appointmentDate = :appointmentDate AND a.startTime < :endTime AND a.endTime > :startTime AND a.status IN (0, 1) AND a.id != :excludeId")
+    long countConflictingAppointmentsExcludingId(@Param("barberId") Long barberId, 
+                                                 @Param("appointmentDate") LocalDate appointmentDate, 
+                                                 @Param("startTime") LocalTime startTime, 
+                                                 @Param("endTime") LocalTime endTime,
+                                                 @Param("excludeId") Long excludeId);
 }

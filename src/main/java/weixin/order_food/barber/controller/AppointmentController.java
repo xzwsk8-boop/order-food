@@ -60,6 +60,17 @@ public class AppointmentController {
     }
 
     /**
+     * 修改预约订单信息 (例如：修改预约时间、理发师、服务项目等)
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<Appointment> updateAppointment(
+            @PathVariable Long id,
+            @RequestBody Appointment appointmentDetails) {
+        Appointment updated = appointmentService.updateAppointment(id, appointmentDetails);
+        return ResponseEntity.ok(updated);
+    }
+
+    /**
      * 获取理发师指定日期的可用时间段（前端展示可选时间）
      * @param barberId 理发师ID
      * @param date 日期，格式: yyyy-MM-dd

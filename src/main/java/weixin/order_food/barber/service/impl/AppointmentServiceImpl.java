@@ -86,6 +86,68 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Appointment updateAppointment(Long id, Appointment updateData) {
+        Appointment existing = appointmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("预约订单不存在，ID: " + id));
+
+        // 检查是否修改了可能引起冲突的字段
+        boolean timeOrBarberChanged = false;
+        if (updateData.getBarberId() != null && !updateData.getBarberId().equals(existing.getBarberId())) {
+            existing.setBarberId(updateData.getBarberId());
+            timeOrBarberChanged = true;
+        }
+        if (updateData.getAppointmentDate() != null && !updateData.getAppointmentDate().equals(existing.getAppointmentDate())) {
+            existing.setAppointmentDate(updateData.getAppointmentDate());
+            timeOrBarberChanged = true;
+        }
+        if (updateData.getStartTime() != null && !updateData.getStartTime().equals(existing.getStartTime())) {
+            existing.setStartTime(updateData.getStartTime());
+            timeOrBarberChanged = true;
+        }
+        if (updateData.getEndTime() != null && !updateData.getEndTime().equals(existing.getEndTime())) {
+            existing.setEndTime(updateData.getEndTime());
+            timeOrBarberChanged = true;
+        }
+
+        // 如果时间和理发师发生变化，需要重新检测冲突
+        if (timeOrBarberChanged) {
+            long conflictCount = appointmentRepository.countConflictingAppointmentsExcludingId(
+                    existing.getBarberId(),
+                    existing.getAppointmentDate(),
+                    existing.getStartTime(),
+                    existing.getEndTime(),
+                    id
+            );
+            if (conflictCount > 0) {
+                throw new RuntimeException("修改后的时间段与该理发师的其他预约冲突，请重新选择时间");
+            }
+        }
+
+        // 更新服务项目
+        if (updateData.getServiceId() != null && !updateData.getServiceId().equals(existing.getServiceId())) {
+            existing.setServiceId(updateData.getServiceId());
+            // 如果只修改了服务没有显式指定价格，重新根据服务拉取价格
+            if (updateData.getPrice() == null) {
+                Optional<weixin.order_food.barber.entity.ServiceItem> serviceOpt = serviceItemRepository.findById(existing.getServiceId());
+                serviceOpt.ifPresent(serviceItem -> existing.setPrice(serviceItem.getPrice()));
+            }
+        }
+
+        // 显式更新价格
+        if (updateData.getPrice() != null) {
+            existing.setPrice(updateData.getPrice());
+        }
+
+        // 更新备注
+        if (updateData.getRemark() != null) {
+            existing.setRemark(updateData.getRemark());
+        }
+
+        return appointmentRepository.save(existing);
+    }
+
+    @Override
     public List<TimeSlot> getAvailableSlots(Long barberId, LocalDate date) {
         // 假设理发师工作时间为 10:00 到 22:00
         LocalTime workStart = LocalTime.of(10, 0);

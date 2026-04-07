@@ -30,6 +30,13 @@ public interface AppointmentService {
     Appointment updateAppointmentStatus(Long appointmentId, Integer status);
 
     /**
+     * 修改预约订单信息
+     * @param id 预约单ID
+     * @param updateData 包含要修改的信息
+     */
+    Appointment updateAppointment(Long id, Appointment updateData);
+
+    /**
      * 获取理发师在指定日期的可用时间段
      */
     List<TimeSlot> getAvailableSlots(Long barberId, LocalDate date);
