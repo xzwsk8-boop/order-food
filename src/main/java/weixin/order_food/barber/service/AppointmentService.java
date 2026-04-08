@@ -18,6 +18,11 @@ public interface AppointmentService {
     List<weixin.order_food.barber.dto.AppointmentDTO> getUserAppointmentsWithDetails(Long userId);
 
     /**
+     * 查询指定理发师的预约记录 (包含服务名称等附加信息)
+     */
+    List<weixin.order_food.barber.dto.AppointmentDTO> getBarberAppointmentsWithDetails(Long barberId);
+
+    /**
      * 查询理发师某天的日程安排
      */
     List<Appointment> getBarberSchedule(Long barberId, LocalDate date);

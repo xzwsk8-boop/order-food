@@ -69,6 +69,24 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
+    public List<weixin.order_food.barber.dto.AppointmentDTO> getBarberAppointmentsWithDetails(Long barberId) {
+        List<Appointment> appointments = appointmentRepository.findByBarberIdOrderByAppointmentDateDescStartTimeDesc(barberId);
+        
+        List<weixin.order_food.barber.dto.AppointmentDTO> dtoList = new ArrayList<>();
+        for (Appointment appt : appointments) {
+            String serviceName = "未知服务";
+            if (appt.getServiceId() != null) {
+                Optional<weixin.order_food.barber.entity.ServiceItem> serviceOpt = serviceItemRepository.findById(appt.getServiceId());
+                if (serviceOpt.isPresent()) {
+                    serviceName = serviceOpt.get().getName();
+                }
+            }
+            dtoList.add(new weixin.order_food.barber.dto.AppointmentDTO(appt, serviceName));
+        }
+        return dtoList;
+    }
+
+    @Override
     public List<Appointment> getBarberSchedule(Long barberId, LocalDate date) {
         // 返回理发师当天所有的预约情况（用于小程序端展示不可选的时间段）
         return appointmentRepository.findByBarberIdAndAppointmentDateOrderByStartTimeAsc(barberId, date);

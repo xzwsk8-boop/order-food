@@ -36,6 +36,15 @@ public class AppointmentController {
     }
 
     /**
+     * 获取指定理发师的预约记录 (包含服务项目名称)
+     */
+    @GetMapping("/barber/{barberId}")
+    public ResponseEntity<List<weixin.order_food.barber.dto.AppointmentDTO>> getBarberAppointments(@PathVariable Long barberId) {
+        List<weixin.order_food.barber.dto.AppointmentDTO> appointments = appointmentService.getBarberAppointmentsWithDetails(barberId);
+        return ResponseEntity.ok(appointments);
+    }
+
+    /**
      * 获取理发师指定日期的预约排班情况（用于前端禁用已被预约的时间段）
      * @param date 格式: yyyy-MM-dd
      */

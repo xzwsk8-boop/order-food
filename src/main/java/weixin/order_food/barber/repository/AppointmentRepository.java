@@ -16,6 +16,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     // 查询指定用户的预约记录，按日期和时间降序排列
     List<Appointment> findByUserIdOrderByAppointmentDateDescStartTimeDesc(Long userId);
 
+    // 查询指定理发师的预约记录，按日期和时间降序排列
+    List<Appointment> findByBarberIdOrderByAppointmentDateDescStartTimeDesc(Long barberId);
+
     // 查询理发师某天的预约安排，按时间升序排列，用于排班展示
     List<Appointment> findByBarberIdAndAppointmentDateOrderByStartTimeAsc(Long barberId, LocalDate appointmentDate);
 
