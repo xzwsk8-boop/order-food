@@ -9,7 +9,8 @@ import java.time.LocalDateTime;
 public class ServiceItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "sixteen-digit-id")
+    @org.hibernate.annotations.GenericGenerator(name = "sixteen-digit-id", strategy = "weixin.order_food.barber.util.SixteenDigitIdGenerator")
     private Long id;
 
     @Column(name = "name", nullable = false, length = 50)

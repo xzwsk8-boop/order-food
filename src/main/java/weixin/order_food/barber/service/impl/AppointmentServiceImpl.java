@@ -161,6 +161,11 @@ public class AppointmentServiceImpl implements AppointmentService {
         if (updateData.getRemark() != null) {
             existing.setRemark(updateData.getRemark());
         }
+        
+        // 更新电话
+        if (updateData.getPhone() != null) {
+            existing.setPhone(updateData.getPhone());
+        }
 
         return appointmentRepository.save(existing);
     }

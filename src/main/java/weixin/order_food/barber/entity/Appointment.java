@@ -13,7 +13,8 @@ import java.time.LocalDateTime;
 public class Appointment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "sixteen-digit-id")
+    @org.hibernate.annotations.GenericGenerator(name = "sixteen-digit-id", strategy = "weixin.order_food.barber.util.SixteenDigitIdGenerator")
     private Long id;
 
     @Column(name = "user_id", nullable = false)
@@ -36,6 +37,9 @@ public class Appointment {
 
     @Column(name = "price", precision = 10, scale = 2)
     private java.math.BigDecimal price;
+
+    @Column(name = "phone", length = 20)
+    private String phone;
 
     // 状态: 0-待服务, 1-已完成, 2-已取消, 3-爽约
     @Column(name = "status", columnDefinition = "TINYINT DEFAULT 0")
@@ -112,6 +116,14 @@ public class Appointment {
 
     public void setPrice(java.math.BigDecimal price) {
         this.price = price;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Integer getStatus() {

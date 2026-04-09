@@ -10,7 +10,8 @@ import java.util.List;
 @Table(name = "barber")
 public class Barber {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "sixteen-digit-id")
+    @org.hibernate.annotations.GenericGenerator(name = "sixteen-digit-id", strategy = "weixin.order_food.barber.util.SixteenDigitIdGenerator")
     private Long id;
 
     @Column(nullable = false, length = 50)

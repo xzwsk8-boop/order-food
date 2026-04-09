@@ -18,6 +18,7 @@ public class AppointmentDTO {
     private LocalTime endTime;
     private Integer status;
     private String remark;
+    private String phone; // 预约电话字段
     private LocalDateTime createTime;
 
     public AppointmentDTO() {
@@ -35,6 +36,7 @@ public class AppointmentDTO {
         this.endTime = appointment.getEndTime();
         this.status = appointment.getStatus();
         this.remark = appointment.getRemark();
+        this.phone = appointment.getPhone();
         this.createTime = appointment.getCreateTime();
     }
 
@@ -124,6 +126,14 @@ public class AppointmentDTO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public LocalDateTime getCreateTime() {
